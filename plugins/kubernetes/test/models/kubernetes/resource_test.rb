@@ -391,4 +391,27 @@ describe Kubernetes::Resource do
       end
     end
   end
+
+  describe Kubernetes::Resource::Pod do
+    describe "#deploy" do
+      let(:kind) { 'Pod' }
+      let(:url) { "http://foobar.server/api/v1/namespaces/pod1/pods/some-project" }
+
+      it "creates when missing" do
+        stub_request(:get, url).to_return(status: 404)
+
+        request = stub_request(:post, base_url).to_return(body: "{}")
+        resource.deploy
+        assert_requested request
+      end
+
+      it "replaces when existing" do
+        stub_request(:get, url).to_return(body: "{}")
+        stub_request(:delete, url)
+        request = stub_request(:post, base_url).to_return(body: "{}")
+        resource.deploy
+        assert_requested request
+      end
+    end
+  end
 end

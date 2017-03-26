@@ -244,6 +244,13 @@ module Kubernetes
       end
     end
 
+    class Pod < Base
+      def deploy
+        delete if running?
+        create
+      end
+    end
+
     def self.build(*args)
       "Kubernetes::Resource::#{args.first.fetch(:kind)}".constantize.new(*args)
     end
