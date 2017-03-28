@@ -7,7 +7,7 @@ describe Stage do
   subject { stages(:test_staging) }
   let(:stage) { subject }
 
-  describe "#validations" do
+  describe "validations" do
     it "is valid" do
       assert_valid stage
     end
@@ -603,6 +603,26 @@ describe Stage do
 
       it "has multiple clones" do
         assert_equal @clones, subject.clones
+      end
+    end
+  end
+
+  describe "#validate_deploy_group_selected" do
+    it "is valid without deploy groups" do
+      stage.deploy_groups.clear
+      assert_valid stage
+    end
+
+    describe "with deploy group feature" do
+      before { DeployGroup.stubs(enabled?: true) }
+
+      it "is valid with deploy groups" do
+        assert_valid stage
+      end
+
+      it "is not valid without deploy groups" do
+        stage.deploy_groups.clear
+        refute_valid stage
       end
     end
   end
