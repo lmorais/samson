@@ -1,2 +1,6 @@
 libmysqlclient-dev
+nodejs
+build-essential
+libpq-dev
+libsqlite3-dev
 
