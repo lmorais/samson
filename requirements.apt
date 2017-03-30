@@ -3,4 +3,5 @@ nodejs
 build-essential
 libpq-dev
 libsqlite3-dev
+python2.7
 
