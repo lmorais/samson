@@ -1,0 +1,24 @@
+# Postgresql
+common: &common
+  adapter: postgresql
+  port: 5432
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASS'] %>
+  host: <%= ENV['DATABASE_HOST'] || '127.0.0.1' %>
+  pool: <%= ENV['RAILS_MAX_THREADS'] %>
+  timeout: 5000
+
+development:
+  <<: *common
+  database: samson_development
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *common
+  database: samson_test<%= ENV['TEST_ENV_NUMBER'] %>
+
+production:
+  <<*: *common
+  database: deploy
