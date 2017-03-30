@@ -1,0 +1,16 @@
+healthcheck:
+  path: /
+  method: GET
+  status: 200
+  allowed_failures: 5
+  use_in_router: false
+hooks:
+#  restart:
+#    before:
+#      - python manage.py generate_local_file
+#    after:
+#      - python manage.py clear_local_cache
+  build:
+    - echo PYTHON
+    - python --version
+
